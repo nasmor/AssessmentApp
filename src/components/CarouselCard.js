@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+import InAppBrowser from 'react-native-inappbrowser-reborn';
 
 const {width: WINDOW_WIDTH, height: WINDOW_HEIGHT} = Dimensions.get('window');
 
@@ -77,7 +78,11 @@ const CarouselCard = ({articles, setActiveToggle}) => {
                 <View style={styles.articleContainer}>
                   <Text style={styles.title}>{article.title}</Text>
                   <Text style={styles.summary}>{article.summary}</Text>
-                  <Text style={styles.url}>{article.url}</Text>
+                  <Text
+                    onPress={() => InAppBrowser.open(article.url)}
+                    style={styles.url}>
+                    {article.url}
+                  </Text>
                 </View>
               </View>
             </Animated.View>
