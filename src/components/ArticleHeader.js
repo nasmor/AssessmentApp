@@ -11,7 +11,7 @@ const ArticleHeader = ({activeToggle, setActiveToggle}) => {
       <Text style={styles.title}>Articles</Text>
 
       <View style={styles.toggleContainer}>
-        {['modal', 'expanding'].map(toggleName => (
+        {['modal', 'carousel'].map(toggleName => (
           <View key={toggleName} style={styles.toggleRow}>
             <Text style={styles.toggleText}>
               {toggleName.charAt(0).toUpperCase() + toggleName.slice(1)} View

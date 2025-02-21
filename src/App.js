@@ -4,6 +4,7 @@ import ArticleModal from './components/ArticleModal';
 import ArticleHeader from './components/ArticleHeader';
 import StackableCard from './components/StackableCard';
 import {articles as listOfArticles} from './models/ArticleModel';
+import CarouselCard from './components/CarouselCard';
 
 const ArticleScreen = () => {
   const [selectedArticle, setSelectedArticle] = useState(null);
@@ -22,33 +23,43 @@ const ArticleScreen = () => {
   };
 
   return (
-    <View>
-      <ArticleHeader
-        color={headerColor}
-        activeToggle={activeToggle}
-        setActiveToggle={setActiveToggle}
-      />
-      <FlatList
-        data={articleList}
-        renderItem={({item}) => (
-          <StackableCard
-            article={item}
-            // onSelect={setSelectedArticle}
-            onExpand={() =>
-              activeToggle === 'modal'
-                ? onSelectArticle(item)
-                : handleExpand(item)
-            }
-            isExpanded={expandedArticle?.id === item.id}
+    <>
+      {activeToggle === 'carousel' ? (
+        <CarouselCard
+          setActiveToggle={setActiveToggle}
+          articles={articleList}
+        />
+      ) : (
+        <View>
+          <ArticleHeader
+            color={headerColor}
+            activeToggle={activeToggle}
+            setActiveToggle={setActiveToggle}
           />
-        )}
-        keyExtractor={item => item.id}
-      />
-      <ArticleModal
-        selectedArticle={selectedArticle}
-        onClose={() => setSelectedArticle(null)}
-      />
-    </View>
+
+          <FlatList
+            data={articleList}
+            renderItem={({item}) => (
+              <StackableCard
+                article={item}
+                onExpand={() =>
+                  activeToggle === 'modal'
+                    ? onSelectArticle(item)
+                    : handleExpand(item)
+                }
+                isExpanded={expandedArticle?.id === item.id}
+              />
+            )}
+            keyExtractor={item => item.id}
+          />
+
+          <ArticleModal
+            selectedArticle={selectedArticle}
+            onClose={() => setSelectedArticle(null)}
+          />
+        </View>
+      )}
+    </>
   );
 };
 
